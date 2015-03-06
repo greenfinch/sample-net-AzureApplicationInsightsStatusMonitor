@@ -11,5 +11,14 @@
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
+    <Startup>
+      <Task commandLine="Role_Start\Bootstrap.bat" executionContext="elevated" taskType="simple">
+        <Environment>
+          <Variable name="EMULATED">
+            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+          </Variable>
+        </Environment>
+      </Task>
+    </Startup>
   </WebRole>
 </ServiceDefinition>
