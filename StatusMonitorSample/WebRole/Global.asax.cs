@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Routing;
+using Utilities;
 
 namespace WebRole
 {
@@ -7,9 +8,16 @@ namespace WebRole
     {
         protected void Application_Start()
         {
+            // Load the instrumentation key from Web.config
             Microsoft.ApplicationInsights.Extensibility
                 .TelemetryConfiguration.Active.InstrumentationKey =
                 System.Web.Configuration.WebConfigurationManager.AppSettings["AppInsightsTelemetryKey"];
+            
+            // Tag the telemetry with the current azure role id
+            Microsoft.ApplicationInsights.Extensibility
+                .TelemetryConfiguration.Active.ContextInitializers
+                .Add(new AppInsightsCurrentRoleIdAsTagInitializer());
+
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }
