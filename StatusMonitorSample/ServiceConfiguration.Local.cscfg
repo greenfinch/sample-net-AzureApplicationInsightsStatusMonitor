@@ -4,4 +4,8 @@
     <Instances count="1" />
     <ConfigurationSettings />
   </Role>
+  <Role name="WorkerRole">
+    <Instances count="1" />
+    <ConfigurationSettings />
+  </Role>
 </ServiceConfiguration>

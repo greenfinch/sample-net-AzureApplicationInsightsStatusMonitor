@@ -4,12 +4,12 @@
     <Sites>
       <Site name="Web">
         <Bindings>
-          <Binding name="Endpoint1" endpointName="Endpoint1" />
+          <Binding name="Endpoint1" endpointName="WebRoleEndpoint" />
         </Bindings>
       </Site>
     </Sites>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="WebRoleEndpoint" protocol="http" port="80" />
     </Endpoints>
     <Startup>
       <Task commandLine="Role_Start\Bootstrap.bat" executionContext="elevated" taskType="simple">
@@ -21,4 +21,9 @@
       </Task>
     </Startup>
   </WebRole>
+  <WorkerRole name="WorkerRole" vmsize="Small">
+    <Endpoints>
+      <InputEndpoint name="WorkerRoleEndpoint" protocol="http" port="8080" />
+    </Endpoints>
+  </WorkerRole>
 </ServiceDefinition>
