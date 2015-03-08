@@ -10,6 +10,7 @@ using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.Owin.Hosting;
+using Utilities;
 
 namespace WorkerRole
 {
@@ -37,6 +38,17 @@ namespace WorkerRole
         {
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
+
+            // Load the instrumentation key from Web.config
+            Microsoft.ApplicationInsights.Extensibility
+                .TelemetryConfiguration.Active.InstrumentationKey =
+                CloudConfigurationManager.GetSetting("AppInsightsTelemetryKey");
+
+            // Tag the telemetry with the current azure role id
+            Microsoft.ApplicationInsights.Extensibility
+                .TelemetryConfiguration.Active.ContextInitializers
+                .Add(new AppInsightsCurrentRoleIdAsTagInitializer());
+
 
             var endpoint = RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["WorkerRoleEndpoint"];
             string baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
