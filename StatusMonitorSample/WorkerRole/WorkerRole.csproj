@@ -136,6 +136,12 @@
     <None Include="app.config" />
     <None Include="ApplicationInsights.config" />
     <None Include="packages.config" />
+    <Content Include="Role_Start\Bootstrap.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Role_Start\InstallStatusMonitor.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
