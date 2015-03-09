@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights.DataContracts;
+﻿using System.Text.RegularExpressions;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace Utilities
@@ -7,7 +8,19 @@ namespace Utilities
     {
         public void Initialize(TelemetryContext context)
         {
-            context.Properties["tags"] = RoleEnvironment.CurrentRoleInstance.Id;
+            context.Properties["Greenfinch - RoleName"] = RoleEnvironment.CurrentRoleInstance.Role.Name;
+            context.Properties["Greenfinch - RoleInstanceId"] = InstanceId;
+        }
+
+        private string InstanceId
+        {
+            get
+            {
+                var instanceId = Regex.Match(RoleEnvironment.CurrentRoleInstance.Id, "\\d+$", RegexOptions.Compiled).Value;
+                return string.IsNullOrWhiteSpace(instanceId)
+                    ? "unable to get instance id"
+                    : instanceId;
+            }
         }
     }
 }

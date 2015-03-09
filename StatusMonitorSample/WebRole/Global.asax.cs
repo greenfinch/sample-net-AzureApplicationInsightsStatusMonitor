@@ -13,11 +13,6 @@ namespace WebRole
                 .TelemetryConfiguration.Active.InstrumentationKey =
                 System.Web.Configuration.WebConfigurationManager.AppSettings["AppInsightsTelemetryKey"];
             
-            // Tag the telemetry with the current azure role id
-            Microsoft.ApplicationInsights.Extensibility
-                .TelemetryConfiguration.Active.ContextInitializers
-                .Add(new AppInsightsCurrentRoleIdAsTagInitializer());
-
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }

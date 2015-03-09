@@ -44,12 +44,6 @@ namespace WorkerRole
                 .TelemetryConfiguration.Active.InstrumentationKey =
                 CloudConfigurationManager.GetSetting("AppInsightsTelemetryKey");
 
-            // Tag the telemetry with the current azure role id
-            Microsoft.ApplicationInsights.Extensibility
-                .TelemetryConfiguration.Active.ContextInitializers
-                .Add(new AppInsightsCurrentRoleIdAsTagInitializer());
-
-
             var endpoint = RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["WorkerRoleEndpoint"];
             string baseUri = String.Format("{0}://{1}", endpoint.Protocol, endpoint.IPEndpoint);
             Trace.TraceInformation(string.Format("Starting OWIN ad {0}", baseUri), "Information");
